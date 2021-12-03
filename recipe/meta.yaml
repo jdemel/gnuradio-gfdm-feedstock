@@ -2,10 +2,10 @@
 
 # Jinja variables help maintain the recipe by keeping repeated info in one place.
 # Fill in the github information or set the package name and URL manually!
-{% set github_user_or_org = "drmpeg" %}
-{% set github_repo = "gr-paint" %}
+{% set github_user_or_org = "jdemel" %}
+{% set github_repo = "gr-gfdm" %}
 # A version number is REQUIRED for sanity. Tag and release if necessary!
-{% set version = "0.0.1a" %}
+{% set version = "1.0.0" %}
 # OOT module packages conventionally start with "gnuradio-" before the OOT name.
 {% set oot_name = github_repo|replace("gr-", "") %}
 {% set name = "gnuradio-" + oot_name %}
@@ -17,18 +17,19 @@ package:
 source:
   ##  To build a package from source in a local directory, use a path:
   # path: ../{{ github_repo }}
+  path: ~/src/{{ github_repo }}
   ##  If getting the source from GitHub, use releases if available
   ##  (and adjust the url as necessary):
   # url: https://github.com/{{ github_user_or_org }}/{{ github_repo }}/releases/download/{{ version }}/{{ github_repo }}-{{ version }}.tar.gz
   ##  and otherwise fall back to versioned archive:
   # url: https://github.com/{{ github_user_or_org }}/{{ github_repo }}/archive/v{{ version }}.tar.gz
   ##  or an archive based on a commit hash:
-  url: https://github.com/{{ github_user_or_org }}/{{ github_repo }}/archive/24765f98ed6d840765071714a5765b43f474608f.tar.gz
+  #url: https://github.com/{{ github_user_or_org }}/{{ github_repo }}/archive/24765f98ed6d840765071714a5765b43f474608f.tar.gz
   ##  sha256 is the preferred checksum -- you can get it for a file with:
   ##   `openssl sha256 <file name>`.
   ##  You may need the openssl package, available on conda-forge:
   ##   `conda install openssl -c conda-forge``
-  sha256: 8928cd02f521d4cb65d90ff9b92cd0fe30011ddffcb3f71dc35b288327dad7d6
+  #sha256: 8928cd02f521d4cb65d90ff9b92cd0fe30011ddffcb3f71dc35b288327dad7d6
 
 build:
   number: 0
@@ -49,13 +50,14 @@ requirements:
     - pybind11
     - python
     - volk
-    # Add/remove library dependencies here
+    - fmt
+
 
   run:
     - numpy
     - python
-    # Add/remove runtime dependencies here (below needed for gr-paint)
-    - pillow
+    ### Add/remove runtime dependencies here (below needed for gr-paint)
+    #- scikit-commpy
 
 test:
   commands:
@@ -95,13 +97,15 @@ about:
   # It is strongly encouraged to include a license file in the package,
   # (even if the license doesn't require it) using the license_file entry.
   # See https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#license-file
-  license_file: COPYING
-  summary: Template package of a GNU Radio module.
+  license_file: LICENSE
+  summary: Generalized Frequency Division Multiplexing in GNU Radio
   # The remaining entries in this section are optional, but recommended.
   description: >
-    Template package of a GNU Radio module. This example builds a package
-    for gr-paint. You can modify the files in the 'recipe' directory and
-    'conda-forge.yml' to build any OOT module!
+    The gr-gfdm project is a Free Software Package which aims to provide
+    an implementation of Generalized Frequency Division Multiplexing (GFDM)
+    in the GNU Radio framework. GFDM is a proposed waveform for use in 5G.
+
+
   doc_url: https://github.com/{{ github_user_or_org }}/{{ github_repo }}
   dev_url: https://github.com/{{ github_user_or_org }}/{{ github_repo }}
 
@@ -109,5 +113,4 @@ extra:
   recipe-maintainers:
     # GitHub IDs for maintainers of the recipe.
     # Always check with the people listed below if they are OK becoming maintainers of the recipe. (There will be spam!)
-    - LisaSimpson
-    - LandoCalrissian
+    - jdemel
